@@ -2,11 +2,12 @@
 import { ref } from 'vue'
 import CotizacionViewer from '../components/CotizacionViewer.vue'
 import ShopifyCotizacion from '../components/ShopifyCotizacion.vue'
+import PropuestaWhatsAppCotizacion from '../components/PropuestaWhatsAppCotizacion.vue'
 import { useDarkMode } from '../composables/useDarkMode'
 
 const { isDark, toggleTheme } = useDarkMode()
 const currentYear = ref<number>(new Date().getFullYear())
-const selectedQuote = ref<'cotizacion1' | 'cotizacion3'>('cotizacion1')
+const selectedQuote = ref<'cotizacion1' | 'cotizacion2' | 'cotizacion3'>('cotizacion1')
 </script>
 
 <template>
@@ -80,6 +81,23 @@ const selectedQuote = ref<'cotizacion1' | 'cotizacion3'>('cotizacion1')
               <span class="sm:hidden">E-Commerce</span>
             </button>
             <button
+              @click="selectedQuote = 'cotizacion2'"
+              :class="[
+                'w-full py-2 sm:py-4 px-2 sm:px-6 font-bold text-xs sm:text-lg transition-all duration-200 flex items-center justify-center gap-1 sm:gap-3 rounded-lg sm:rounded-none min-h-[40px] sm:min-h-[44px]',
+                selectedQuote === 'cotizacion2'
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-slate-100 dark:bg-slate-600 text-slate-900 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-500'
+              ]"
+              :aria-pressed="selectedQuote === 'cotizacion2'"
+              role="tab"
+            >
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="hidden sm:inline">Propuesta WhatsApp</span>
+              <span class="sm:hidden">WhatsApp</span>
+            </button>
+            <button
               @click="selectedQuote = 'cotizacion3'"
               :class="[
                 'w-full py-2 sm:py-4 px-2 sm:px-6 font-bold text-xs sm:text-lg transition-all duration-200 flex items-center justify-center gap-1 sm:gap-3 rounded-lg sm:rounded-none min-h-[40px] sm:min-h-[44px]',
@@ -102,6 +120,7 @@ const selectedQuote = ref<'cotizacion1' | 'cotizacion3'>('cotizacion1')
         <!-- Contenido dinámico según selección -->
         <div class="transition-all duration-300">
           <CotizacionViewer v-if="selectedQuote === 'cotizacion1'" />
+          <PropuestaWhatsAppCotizacion v-else-if="selectedQuote === 'cotizacion2'" />
           <ShopifyCotizacion v-else-if="selectedQuote === 'cotizacion3'" />
         </div>
       </div>
