@@ -207,5 +207,5 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <style scoped>
-@apply;
+/* Estilos personalizados si es necesario */
 </style>
